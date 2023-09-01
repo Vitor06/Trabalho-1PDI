@@ -3,27 +3,28 @@ import cv2 as cv
 
 
 def main():
-    m = 120       
-    x = 30
+    m = 0       
+    x = 50
 
     if(m+x>360):   
         intervalo_superior = ((m + x)%360) //2
-        intervalo_inferior = (m - x )//2 
+        intervalo_inferior= (m - x )//2
 
-    # if(m-x<0):
-    #     intervalo_superior = (m + x) //2
-    #     intervalo_inferior = ((m - x ) + 360 )//2 
+    if(m-x<0):
+        intervalo_inferior = (m + x) //2
+        intervalo_superior = ((m - x ) + 360 )//2 
     else:
         intervalo_inferior = (m - x )//2 
         intervalo_superior = (m + x) //2
 
-    img = cv.imread("flor.jpg")
+    img = cv.imread("circulo.jpg")
     hsv_img = cv.cvtColor(img, cv.COLOR_BGR2HSV)
     h_channel = hsv_img[:, :, 0]  # Canal H (Matiz)
 
     mask = np.logical_and(h_channel >= intervalo_inferior, h_channel <= intervalo_superior)
 
-    h_channel[mask] = (h_channel[mask] + 90)
+    print(h_channel[mask] )
+    h_channel[mask] = (h_channel[mask] + 90 )
 
     hsv_img[:, :, 0] = h_channel
 
